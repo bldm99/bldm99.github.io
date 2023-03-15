@@ -4,11 +4,23 @@ const form = document.getElementById("form");
 const nombre = document.getElementById("nombre");
 const email = document.getElementById("email");
 const asunto = document.getElementById("asunto");
+const mensaje = document.getElementById("mensaje");
+
+const verifi = document.getElementById('msg');
 
 form.addEventListener("submit" , e =>{
     e.preventDefault();
 
     validarInputs();
+    console.log(validarInputs());
+
+    /* Si todo los campos del fromulario son correctos, entonces nos mostrara un mesaje de enviado*/ 
+    if(validarInputs() === 4){
+        console.log("funcionando");
+
+        setTimeout(verifi.style.display='block', 500);
+        /*setTimeout("document.getElementById('msg').style.display='none';", 3000);*/
+    }
 });
 
 
@@ -41,32 +53,60 @@ const validarEmail = email => {
     return re.test(String(email).toLowerCase());
 }
 
+
 const validarInputs = () =>{
+
+    var todoCorrecto = 0;
+
     const nombreValue = nombre.value.trim();
     const emailValue = email.value.trim();
     const asuntoValue = asunto.value.trim();
+    const mensajeValue = mensaje.value.trim();
 
+    /*Requerimientos para input nombre*/ 
     if(nombreValue === ''){
         setError(nombre ,'Este campo requiere de un nombre');
+        todoCorrecto = 0;
+        
     }else{
         setSuccess(nombre);
+        todoCorrecto = todoCorrecto + 1;
     }
 
+    /*Requerimientos para input email*/ 
     if(emailValue === ''){
         setError(email ,'Este campo es requerido completar');
+        todoCorrecto = 0;
     }else if(!validarEmail(emailValue)){
         setError(email ,"Email no valido");
+        todoCorrecto = 0;
     }else{
         setSuccess(email);
+        todoCorrecto = todoCorrecto + 1;
     }
 
+    /*Requerimientos para input asunto*/ 
     if(asuntoValue === ''){
         setError(asunto ,'Este campo es requerido completar');
+        todoCorrecto = 0;
     }else{
         setSuccess(asunto);
+        todoCorrecto = todoCorrecto + 1;
     }
-    
+
+    /*Requerimientos para testarea mensaje*/ 
+    if(mensajeValue === ''){
+        setError(mensaje,'Es necesario que este campo tenga contenido');
+        todoCorrecto = 0;
+    }else{
+        setSuccess(mensaje);
+        todoCorrecto = todoCorrecto + 1;
+    }
+    return todoCorrecto;
+  
 };
+
+
 
 
 
@@ -100,6 +140,9 @@ function animacion(){
     itemsme5.classList.toggle("trns_itens5");
     itemsme6.classList.toggle("trns_itens6");  
 }
+
+/*---------------------------- Alertas de confirmacion-----------------------------*/
+
 
 
 
